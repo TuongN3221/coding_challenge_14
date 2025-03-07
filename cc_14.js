@@ -5,7 +5,7 @@ function createSupportTicket(customerName, issue, priorityLevel) {
     ticketDiv.setAttribute('id', `ticket-${Date.now()}`);
 
     const customerHeading = document.createElement('h3');
-    customerHeading.textContent = `Customer: ${customerName}`;
+    customerHeading.textContent = `Member: ${customerName}`;
     ticketDiv.appendChild(customerHeading);
 
     const issueDescriptor = document.createElement('p');
@@ -14,13 +14,6 @@ function createSupportTicket(customerName, issue, priorityLevel) {
 
     const priorityColor = document.createElement('span');
     priorityColor.textContent = `Priority: ${priorityLevel}`;
-    if (priorityLevel === 'High'){
-        priorityColor.classList.add('priority-high')
-    } else if (priorityLevel === 'Medium'){
-        priorityColor.classList.add('priority-medium')
-    } else if (priorityLevel === 'Low'){
-        priorityColor.classList.add('priority-low')
-    }
     ticketDiv.appendChild(priorityColor);
 
     const resolveButton = document.createElement('button');
@@ -34,7 +27,22 @@ function createSupportTicket(customerName, issue, priorityLevel) {
     const ticketContainer = document.getElementById('ticketContainer')
     ticketContainer.appendChild(ticketDiv)
 }
-createSupportTicket('The Riddler', 'Leave Clue Boxes for batman', 'High');
-createSupportTicket('Two-Face', 'Organize National Bank', 'Medium');
+createSupportTicket('The Riddler', 'Leave Clue Boxes for Batman', 'High');
+createSupportTicket('Two-Face', 'Organize robbery of Gotham National Bank', 'Medium');
 createSupportTicket('Poison Ivy', 'Assign soldiers to maintain plants', 'Low')
 
+// Task 3
+function highlightHighPriority() {
+    const allTickets = document.querySelectorAll('.ticket')
+
+    const ticketArray = Array.from(allTickets);
+
+    ticketArray.forEach(ticket => {
+        const priorityElement = ticket.querySelector('span')
+        if (priorityElement && priorityElement.textContent.includes('Priority: High')) {
+            ticket.style.backgroundColor = '#ffcccc'
+            ticket.style.backgroundColor = '2px solid #ff000'
+        }
+    })
+}
+highlightHighPriority();
