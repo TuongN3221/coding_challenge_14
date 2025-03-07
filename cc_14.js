@@ -19,8 +19,10 @@ function createSupportTicket(customerName, issue, priorityLevel) {
     const resolveButton = document.createElement('button');
     resolveButton.textContent = 'Resolve';
     resolveButton.setAttribute('class', 'resolve-button');
-    resolveButton.addEventListener('click', () =>{
-        ticketDiv.remove()
+    resolveButton.addEventListener('click', (event) =>{
+        event.stopPropagation()
+        const ticketContainer = document.getElementById('ticketContainer')
+        ticketContainer.removeChild(ticketDiv)
     })
     ticketDiv.appendChild(resolveButton)
 
@@ -46,3 +48,9 @@ function highlightHighPriority() {
     })
 }
 highlightHighPriority();
+
+// Task 4 
+ticketContainer.addEventListener('click', (event) =>{
+    console.log("A ticket has been clicked.")
+    event.stopPropagation()
+})
