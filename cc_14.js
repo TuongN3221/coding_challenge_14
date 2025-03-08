@@ -1,9 +1,10 @@
 // Task 2
 function createSupportTicket(customerName, issue, priorityLevel) {
+    // Creates div element for support ticket
     const ticketDiv = document.createElement('div');
     ticketDiv.setAttribute('class', 'ticket');
     ticketDiv.setAttribute('id', `ticket-${Date.now()}`);
-
+    // Create headings for ticket
     const customerHeading = document.createElement('h3');
     customerHeading.textContent = `Member: ${customerName}`;
     ticketDiv.appendChild(customerHeading);
@@ -42,11 +43,12 @@ function createSupportTicket(customerName, issue, priorityLevel) {
 
 // Task 5 Enable editing
 function allowEditing(ticketDiv, customerHeading, issueDescriptor, priorityColor) {
+    //Gets current text of the ticket detail
     const name = customerHeading.textContent;
     const issue = issueDescriptor.textContent;
     const priority = priorityColor.textContent;
 
-    // Creates input fields
+    // Creates input fields to edit
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.value = name;
@@ -75,6 +77,7 @@ function allowEditing(ticketDiv, customerHeading, issueDescriptor, priorityColor
 
 // Task 5 Save details
 function saveInputDetails(ticketDiv, customerHeading, issueDescriptor, priorityColor, nameInput, issueInput, priorityInput) {
+    // Gets the values from the input field
     const updatedName = nameInput.value;
     const updatedIssue = issueInput.value;
     const updatedPriority = priorityInput.value;
@@ -106,8 +109,8 @@ createSupportTicket('Poison Ivy', 'Assign soldiers to maintain plants', 'Low');
 
 // Task 3
 function highlightHighPriority() {
+    // Collects all ticket element
     const allTickets = document.querySelectorAll('.ticket');
-
     const ticketArray = Array.from(allTickets);
 
     ticketArray.forEach(ticket => {
