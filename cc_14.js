@@ -16,41 +16,113 @@ function createSupportTicket(customerName, issue, priorityLevel) {
     priorityColor.textContent = `Priority: ${priorityLevel}`;
     ticketDiv.appendChild(priorityColor);
 
+    // Create Resolve button
     const resolveButton = document.createElement('button');
     resolveButton.textContent = 'Resolve';
     resolveButton.setAttribute('class', 'resolve-button');
-    resolveButton.addEventListener('click', (event) =>{
-        event.stopPropagation()
-        const ticketContainer = document.getElementById('ticketContainer')
-        ticketContainer.removeChild(ticketDiv)
-    })
-    ticketDiv.appendChild(resolveButton)
+    resolveButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const ticketContainer = document.getElementById('ticketContainer');
+        ticketContainer.removeChild(ticketDiv);
+    });
+    ticketDiv.appendChild(resolveButton);
 
-    const ticketContainer = document.getElementById('ticketContainer')
-    ticketContainer.appendChild(ticketDiv)
+    // Task 5 Create Edit button
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit'; // Add text to the edit button
+    editButton.setAttribute('class', 'edit-button');
+    editButton.addEventListener('click', () => {
+        allowEditing(ticketDiv, customerHeading, issueDescriptor, priorityColor);
+    });
+    ticketDiv.appendChild(editButton);
+
+    const ticketContainer = document.getElementById('ticketContainer');
+    ticketContainer.appendChild(ticketDiv);
 }
+
+// Task 5 Enable editing
+function allowEditing(ticketDiv, customerHeading, issueDescriptor, priorityColor) {
+    const name = customerHeading.textContent;
+    const issue = issueDescriptor.textContent;
+    const priority = priorityColor.textContent;
+
+    // Creates input fields
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.value = name;
+
+    const issueInput = document.createElement('input');
+    issueInput.type = 'text';
+    issueInput.value = issue;
+
+    const priorityInput = document.createElement('input');
+    priorityInput.type = 'text';
+    priorityInput.value = priority;
+
+    // Creates save button
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save'; // Add text to the save button
+    saveButton.addEventListener('click', () => {
+        saveInputDetails(ticketDiv, customerHeading, issueDescriptor, priorityColor, nameInput, issueInput, priorityInput);
+    });
+
+    // Replace static text with input fields and edit button with save button
+    customerHeading.replaceWith(nameInput);
+    issueDescriptor.replaceWith(issueInput);
+    priorityColor.replaceWith(priorityInput);
+    ticketDiv.querySelector('.edit-button').replaceWith(saveButton);
+}
+
+// Task 5 Save details
+function saveInputDetails(ticketDiv, customerHeading, issueDescriptor, priorityColor, nameInput, issueInput, priorityInput) {
+    const updatedName = nameInput.value;
+    const updatedIssue = issueInput.value;
+    const updatedPriority = priorityInput.value;
+
+    // Update ticket details
+    customerHeading.textContent = updatedName;
+    issueDescriptor.textContent = updatedIssue;
+    priorityColor.textContent = updatedPriority;
+
+    // Replace input fields with static text
+    nameInput.replaceWith(customerHeading);
+    issueInput.replaceWith(issueDescriptor);
+    priorityInput.replaceWith(priorityColor);
+
+    // Recreate edit button
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.setAttribute('class', 'edit-button');
+    editButton.addEventListener('click', () => {
+        allowEditing(ticketDiv, customerHeading, issueDescriptor, priorityColor);
+    });
+    ticketDiv.querySelector('.resolve-button').insertAdjacentElement('afterend', editButton);
+}
+
+// Create initial tickets
 createSupportTicket('The Riddler', 'Leave Clue Boxes for Batman', 'High');
 createSupportTicket('Two-Face', 'Organize robbery of Gotham National Bank', 'Medium');
-createSupportTicket('Poison Ivy', 'Assign soldiers to maintain plants', 'Low')
+createSupportTicket('Poison Ivy', 'Assign soldiers to maintain plants', 'Low');
 
 // Task 3
 function highlightHighPriority() {
-    const allTickets = document.querySelectorAll('.ticket')
+    const allTickets = document.querySelectorAll('.ticket');
 
     const ticketArray = Array.from(allTickets);
 
     ticketArray.forEach(ticket => {
-        const priorityElement = ticket.querySelector('span')
+        const priorityElement = ticket.querySelector('span');
         if (priorityElement && priorityElement.textContent.includes('Priority: High')) {
-            ticket.style.backgroundColor = '#ffcccc'
-            ticket.style.backgroundColor = '2px solid #ff000'
+            ticket.style.backgroundColor = '#ffcccc';
+            ticket.style.border = '2px solid #ff0000';
         }
-    })
+    });
 }
 highlightHighPriority();
 
-// Task 4 
-ticketContainer.addEventListener('click', (event) =>{
-    console.log("A ticket has been clicked.")
-    event.stopPropagation()
-})
+// Task 4
+const ticketContainer = document.getElementById('ticketContainer');
+ticketContainer.addEventListener('click', (event) => {
+    console.log("A ticket has been clicked.");
+    event.stopPropagation();
+});
